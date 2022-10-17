@@ -1,11 +1,13 @@
 {
   "name": "proyecto-de-grado",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "private": true,
   "engines": {
-    "node": "16.14.0",
-    "npm": "8.x"
+    "node": ">= 15.0.0",
+    "npm": ">= 8.x"
   },
+
+  
   
   "scripts": {
     "start": "node ./start.js",
