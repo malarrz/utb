@@ -14,7 +14,7 @@ body {
     background: -webkit-gradient(linear, left top, right top, from(#48ded4), color-stop(20%, #a026bf), color-stop(60%, #e82c75), color-stop(85%, #FFC40E), color-stop(95%, #48ded4));
     background: -o-linear-gradient(left, #48ded4 0%, #a026bf 20%, #e82c75 60%, #FFC40E 85%, #48ded4 95%);
     background: linear-gradient(90deg, #48ded4 0%, #a026bf 20%, #e82c75 60%, #FFC40E 85%, #48ded4 95%);
-    height: 10px;
+    height: 0px;
     width: 100%; }
 
 .inner {
