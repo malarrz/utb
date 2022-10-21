@@ -1,0 +1,14 @@
+mixin formTienda(tienda = [])
+  form(action="/agregar" method="POST" class="carg")
+    label(for="nombre") Nombre de la Tienda:
+    input(type="text" name="nombre")
+    label(for="descripcion") Descripción de la Tienda:
+    textarea(name="descripcion")
+    - const opciones = ['PC', 'Xbox', 'Playstation', 'Nintendo']
+    label() Plataformas
+    ul.tags
+      each opcion in opciones
+        .tag.tag__choice
+          input(type="checkbox" id=opcion value=opcion name="etiquetas")
+          label(for=opcion) #{opcion}
+    input(type="submit" value="Guardar" class="button")

@@ -2,6 +2,10 @@ exports.homePage = (req, res) => {
     res.render('index');
 }
 
-exports.anadirTienda = (req, res) => {
-    res.send('Funciona!');
+exports.agregarTienda = (req, res) => {
+    res.render('editarTienda', { title: 'Agregar Tienda' });
+}
+
+exports.crearTienda = (req, res) => {
+    res.json(req.body)
 }
