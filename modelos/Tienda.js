@@ -5,9 +5,8 @@ const slug = require('slugs');
 const modeloTienda = new mongoose.Schema({
     nombre: {
         type: String,
-        trim: true, //Quita los espacios al comienzo y al final del String.
+        trim: true,
         required: 'Coloca el nombre de la tienda'
-
     },
     slug: String,
     descripcion: {
@@ -17,7 +16,7 @@ const modeloTienda = new mongoose.Schema({
     etiquetas: [String]
 })
 
-modeloTienda.pre('save', function(next){
+modeloTienda.pre('save', function(next) {
     if(!this.ismodified('name')) {
         next();
         return;
