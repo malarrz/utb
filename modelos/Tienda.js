@@ -17,11 +17,11 @@ const modeloTienda = new mongoose.Schema({
 })
 
 modeloTienda.pre('save', function(next) {
-    if(!this.ismodified('name')) {
+    if(!this.isModified('nombre')) {
         next();
         return;
     }
-    this.slug = slug(this.name);
+    this.slug = slug(this.nombre);
     next();
 })
 
