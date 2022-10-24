@@ -1,0 +1,8 @@
+mixin tarjetaTienda(tienda = {})
+  .store
+    .store__hero
+      img(src=`/uploads/${tienda.foto || 'tienda.png' }`)
+      h2.title
+        a(href=`/tiendas/${tienda.slug}`) #{tienda.nombre}
+    .store__details
+      p= tienda.descripcion.split(' ').slice(0, 25).join(' ')

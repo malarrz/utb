@@ -10,7 +10,12 @@ exports.agregarTienda = (req, res) => {
 };
 
 exports.crearTienda = async (req, res) => {
-    const tienda = new Tienda(req.body);
-    await tienda.save();
-    res.redirect('/');
+    const tienda = await (new Tienda(req.body)).save();
+    req.flash('success', `Se creó la tienda: <strong>${tienda.nombre}</strong>.`)
+    res.redirect(`/tiendas/${tienda.slug}`);
+};
+
+exports.mostrarTiendas = async (req, res) => {
+    const tiendas = await Tienda.find();
+    res.render('tiendas', { title: 'TIENDAS', tiendas });
 };
