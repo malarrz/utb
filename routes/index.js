@@ -7,5 +7,7 @@ router.get('/', catchErrors(controladorTienda.mostrarTiendas));
 router.get('/tiendas', catchErrors(controladorTienda.mostrarTiendas));  
 router.get('/agregar', controladorTienda.agregarTienda);
 router.post('/agregar', catchErrors(controladorTienda.crearTienda));
+router.post('/agregar/:id', catchErrors(controladorTienda.modificarTienda));
+router.get('/tiendas/:id/editar', catchErrors(controladorTienda.editarTienda));
 
 module.exports = router;

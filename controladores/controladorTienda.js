@@ -19,3 +19,14 @@ exports.mostrarTiendas = async (req, res) => {
     const tiendas = await Tienda.find();
     res.render('tiendas', { title: 'TIENDAS', tiendas });
 };
+
+exports.editarTienda = async (req, res) => {
+    const tienda = await Tienda.findOne({ _id: req.params.id });
+    res.render('editarTienda', { title: `Editando ${tienda.nombre}`, tienda});
+}
+
+exports.modificarTienda = async (req, res) => {
+    const tienda = await Tienda.findOneAndUpdate({ _id: req.params.id }, req.body, { new: true, runValidators: true }).exec();
+    req.flash('success', `Se modificó exitosamente la tienda <strong>${tienda.nombre}</strong>. <a href="/tiendas/${tienda.slug}"> VER TIENDA</a>`);
+    res.redirect(`/tiendas/${tienda._id}/editar`);
+}

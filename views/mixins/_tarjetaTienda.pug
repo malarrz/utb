@@ -1,6 +1,10 @@
 mixin tarjetaTienda(tienda = {})
   .store
     .store__hero
+      .store__actions
+        .store__action.store__action--edit
+          a(href=`/tiendas/${tienda._id}/editar`)
+            != h.icon('pencil')
       img(src=`/uploads/${tienda.foto || 'tienda.png' }`)
       h2.title
         a(href=`/tiendas/${tienda.slug}`) #{tienda.nombre}
