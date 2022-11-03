@@ -4,6 +4,12 @@ mixin formTienda(tienda = [])
     input(type="text" name="nombre" value=tienda.nombre)
     label(for="descripcion") Descripción de la Tienda:
     textarea(name="descripcion")= tienda.descripcion
+    label(for="direccion") Dirección:
+    input(type="text" id="direccion" name="ubicacion[direccion]" value=(tienda.ubicacion && tienda.ubicacion.direccion))
+    label(for="longitud") Longitud:
+    input(type="text" id="longitud" name="ubicacion[coordenadas][0]" value=(tienda.ubicacion && tienda.ubicacion.coordenadas[0]) required)
+    label(for="latitud") Latitud:
+    input(type="text" id="latitud" name="ubicacion[coordenadas][1]" value=(tienda.ubicacion && tienda.ubicacion.coordenadas[1]) required)
     - const opciones = ['PC', 'Xbox', 'Playstation', 'Nintendo']
     - const etiquetas = tienda.etiquetas || []
     label() Plataformas

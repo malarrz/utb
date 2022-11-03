@@ -13,7 +13,25 @@ const modeloTienda = new mongoose.Schema({
         type: String,
         trim: true
     },
-    etiquetas: [String]
+    etiquetas: [String],
+    creado: { 
+        type: Date, 
+        default: Date.now
+    },
+    ubicacion: {
+        type: { 
+            type: String,
+            default: 'Point'
+        },
+        coordenadas: [{
+            type: Number,
+            required: 'Colocar coordenadas'
+        }],
+        direccion: {
+            type: String,
+            required: 'Colocar dirección'
+        }
+    }
 })
 
 modeloTienda.pre('save', function(next) {
