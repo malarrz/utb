@@ -54,5 +54,6 @@ html
         p PROYECTO DE GRADO UTB
 
     block scripts
-      script(src=`https://maps.googleapis.com/maps/api/js?key=${process.env.KEY}&libraries=places`)
+      script(async defer src=`https://maps.googleapis.com/maps/api/js?key=${process.env.KEY}&callback=initMap`)
+      //script(src=`https://maps.googleapis.com/maps/api/js?key=${process.env.KEY}&libraries=places`)
       script(src="/dist/App.bundle.js")
