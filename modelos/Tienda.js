@@ -15,7 +15,7 @@ const modeloTienda = new mongoose.Schema({
     },
     etiquetas: [String],
     creado: { 
-        type: Date, 
+        type: Date,
         default: Date.now
     },
     ubicacion: {
@@ -32,7 +32,7 @@ const modeloTienda = new mongoose.Schema({
             required: 'Colocar dirección'
         }
     }
-})
+});
 
 modeloTienda.pre('save', function(next) {
     if(!this.isModified('nombre')) {
@@ -41,6 +41,6 @@ modeloTienda.pre('save', function(next) {
     }
     this.slug = slug(this.nombre);
     next();
-})
+});
 
 module.exports = mongoose.model('Tienda', modeloTienda);
