@@ -1,5 +1,20 @@
 const mongoose = require('mongoose');
 const Tienda = mongoose.model('Tienda');
+const multer = require('multer');
+const jimp = require('jimp');
+const uuid = require('uuid');
+
+const multerOptions = {
+    storage: multer.memoryStorage(),
+    fileFilter(req, file, next) {
+        const isPhoto = file.mimetype.startsWith('image/');
+        if (isPhoto) {
+            next(null, true);
+        } else {
+            next({ message: 'Formato de imagen no permitido'}, false);
+        }
+    }
+};
 
 exports.homePage = (req, res) => {
     res.render('index');
@@ -8,6 +23,21 @@ exports.homePage = (req, res) => {
 exports.agregarTienda = (req, res) => {
     res.render('editarTienda', { title: 'Agregar Tienda' });
 };
+
+exports.upload = multer(multerOptions).single('photo');
+
+exports.redimensionar = async(req, res, next) => {
+    if (!req.file) {
+        next();
+        return;
+    }
+    const extension = req.file.mimetype.split('/')[1];
+    req.body.foto = `${uuid.v4()}.${extension}`;
+    const foto = await jimp.read(req.file.buffer);
+    await foto.resize(800, jimp.AUTO);
+    await foto.write(`./public/uploads/${req.body.foto}`);
+    next();
+}
 
 exports.crearTienda = async (req, res) => {
     const tienda = await (new Tienda(req.body)).save();
@@ -26,6 +56,7 @@ exports.editarTienda = async (req, res) => {
 }
 
 exports.modificarTienda = async (req, res) => {
+    req.body.ubicacion.type = 'Point';
     const tienda = await Tienda.findOneAndUpdate({ _id: req.params.id }, req.body, { new: true, runValidators: true }).exec();
     req.flash('success', `Se modificó exitosamente la tienda <strong>${tienda.nombre}</strong>. <a href="/tiendas/${tienda.slug}"> VER TIENDA</a>`);
     res.redirect(`/tiendas/${tienda._id}/editar`);

@@ -1,9 +1,13 @@
 mixin formTienda(tienda = [])
-  form(action=`/agregar/${tienda._id || ''}` method="POST" class="carg")
+  form(action=`/agregar/${tienda._id || ''}` method="POST" class="card" enctype="multipart/form-data")
     label(for="nombre") Nombre de la Tienda:
     input(type="text" name="nombre" value=tienda.nombre)
     label(for="descripcion") Descripción de la Tienda:
     textarea(name="descripcion")= tienda.descripcion
+    label(for="foto") Fotografía:
+      input(type="file" name="foto" id="foto" accept="image/gif, image/png, image/jpeg")
+      if tienda.foto
+        img(src=`/uploads/${tienda.foto}`, alt="tienda.nombre" width=300)
     label(for="direccion") Dirección:
     input(type="text" id="direccion" name="ubicacion[direccion]" value=(tienda.ubicacion && tienda.ubicacion.direccion))
     label(for="longitud") Longitud:

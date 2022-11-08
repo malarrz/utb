@@ -31,7 +31,8 @@ const modeloTienda = new mongoose.Schema({
             type: String,
             required: 'Colocar dirección'
         }
-    }
+    },
+    photo: String
 });
 
 modeloTienda.pre('save', function(next) {
