@@ -11,7 +11,7 @@ const multerOptions = {
         if (isPhoto) {
             next(null, true);
         } else {
-            next({ message: 'Formato de imagen no permitido'}, false);
+            next({ message: 'Formato de imagen no permitido' }, false);
         }
     }
 };
@@ -24,7 +24,7 @@ exports.agregarTienda = (req, res) => {
     res.render('editarTienda', { title: 'Agregar Tienda' });
 };
 
-exports.upload = multer(multerOptions).single('photo');
+exports.upload = multer(multerOptions).single('foto');
 
 exports.redimensionar = async(req, res, next) => {
     if (!req.file) {
