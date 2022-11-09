@@ -3,6 +3,7 @@ const Tienda = mongoose.model('Tienda');
 const multer = require('multer');
 const jimp = require('jimp');
 const uuid = require('uuid');
+const { Store } = require('express-session');
 
 const multerOptions = {
     storage: multer.memoryStorage(),
@@ -53,11 +54,17 @@ exports.mostrarTiendas = async (req, res) => {
 exports.editarTienda = async (req, res) => {
     const tienda = await Tienda.findOne({ _id: req.params.id });
     res.render('editarTienda', { title: `Editando ${tienda.nombre}`, tienda});
-}
+};
 
 exports.modificarTienda = async (req, res) => {
     req.body.ubicacion.type = 'Point';
     const tienda = await Tienda.findOneAndUpdate({ _id: req.params.id }, req.body, { new: true, runValidators: true }).exec();
     req.flash('success', `Se modificó exitosamente la tienda <strong>${tienda.nombre}</strong>. <a href="/tiendas/${tienda.slug}"> VER TIENDA</a>`);
     res.redirect(`/tiendas/${tienda._id}/editar`);
-}
+};
+
+exports.mostrarTienda = async (req, res, next) => {
+    const tienda = await Tienda.findOne({ slug: req.params.slug });
+    if (!tienda) return next();
+    res.render('tienda', { tienda, title: tienda.nombre });
+};

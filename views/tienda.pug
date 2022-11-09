@@ -1,0 +1,12 @@
+extends layout 
+
+block content
+  .single
+    .single__hero
+      img.single__image(src=`/uploads/${tienda.foto || 'tienda.png'}`)
+      h2.title.title--single
+        a(href=`/tiendas/${tienda.slug}`) #{tienda.nombre}
+
+  .single__details.inner
+    img.single__map(src=h.staticMap(tienda.ubicacion.coordenadas))
+    p.single__location= tienda.ubicacion.direccion

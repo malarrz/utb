@@ -10,5 +10,6 @@ router.post('/agregar', controladorTienda.upload, catchErrors(controladorTienda.
 catchErrors(controladorTienda.crearTienda));
 router.post('/agregar/:id', catchErrors(controladorTienda.modificarTienda));
 router.get('/tiendas/:id/editar', catchErrors(controladorTienda.editarTienda));
+router.get('/tiendas/:slug', catchErrors(controladorTienda.mostrarTienda));
 
 module.exports = router;
