@@ -10,3 +10,13 @@ block content
   .single__details.inner
     img.single__map(src=h.staticMap(tienda.ubicacion.coordenadas))
     p.single__location= tienda.ubicacion.direccion
+
+    if tienda.etiquetas 
+      ul.tags 
+        each etiqueta in tienda.etiquetas 
+          li.tag
+            a.tag
+              a.tag__link(href=`/etiquetas/${etiqueta}`)
+                span.tag__text ##{etiqueta}
+
+    p= tienda.descripcion

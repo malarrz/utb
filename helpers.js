@@ -22,7 +22,7 @@ exports.siteName = `SISTEMA DE TIENDAS`;
 
 exports.menu = [
   { slug: '/tiendas', title: 'Tiendas', icon: 'store', },
-  { slug: '/tags', title: 'Etiquetas', icon: 'tag', },
+  { slug: '/etiquetas', title: 'Etiquetas', icon: 'tag', },
   //{ slug: '/top', title: 'Top', icon: 'top', },
   { slug: '/agregar', title: 'Agregar Tienda', icon: 'add', },
   { slug: '/mapa', title: 'Mapa', icon: 'map', },
