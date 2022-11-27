@@ -35,13 +35,26 @@ const modeloTienda = new mongoose.Schema({
     foto: String
 });
 
-modeloTienda.pre('save', function(next) {
+modeloTienda.pre('save', async function(next) {
     if(!this.isModified('nombre')) {
         next();
         return;
     }
     this.slug = slug(this.nombre);
+    const slugRegEx = new RegExp(`^(${this.slug})((-[0-9]*$)?)$`, 'i');
+    const tiendaSlug = await this.constructor.find({ slug: slugRegEx });
+    if(tiendaSlug.length) {
+        this.slug = `${this.slug}-${tiendaSlug.length + 1}`;
+    }
     next();
 });
+
+modeloTienda.statics.organizarEtiquetas = function() {
+    return this.aggregate([
+        { $unwind: '$etiquetas' },
+        { $group: { _id: '$etiquetas', count: { $sum: 1 } } },
+        { $sort: { count: -1 } }
+    ]);
+};
 
 module.exports = mongoose.model('Tienda', modeloTienda);

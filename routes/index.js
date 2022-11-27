@@ -11,5 +11,7 @@ catchErrors(controladorTienda.crearTienda));
 router.post('/agregar/:id', catchErrors(controladorTienda.modificarTienda));
 router.get('/tiendas/:id/editar', catchErrors(controladorTienda.editarTienda));
 router.get('/tiendas/:slug', catchErrors(controladorTienda.mostrarTienda));
+router.get('/etiquetas', catchErrors(controladorTienda.tiendasPorEtiqueta));
+router.get('/etiquetas/:etiqueta', catchErrors(controladorTienda.tiendasPorEtiqueta))
 
 module.exports = router;

@@ -57,7 +57,7 @@ exports.editarTienda = async (req, res) => {
 };
 
 exports.modificarTienda = async (req, res) => {
-    req.body.ubicacion.type = 'Point';
+    //req.body.ubicacion.type = 'Point';
     const tienda = await Tienda.findOneAndUpdate({ _id: req.params.id }, req.body, { new: true, runValidators: true }).exec();
     req.flash('success', `Se modificó exitosamente la tienda <strong>${tienda.nombre}</strong>. <a href="/tiendas/${tienda.slug}"> VER TIENDA</a>`);
     res.redirect(`/tiendas/${tienda._id}/editar`);
@@ -67,4 +67,10 @@ exports.mostrarTienda = async (req, res, next) => {
     const tienda = await Tienda.findOne({ slug: req.params.slug });
     if (!tienda) return next();
     res.render('tienda', { tienda, title: tienda.nombre });
+};
+
+exports.tiendasPorEtiqueta = async (req, res) => {
+    const etiquetas = await Tienda.organizarEtiquetas();
+    const etiqueta = req.params.etiqueta;
+    res.render('etiqueta', { etiquetas, title: 'Etiquetas', etiqueta});
 };
