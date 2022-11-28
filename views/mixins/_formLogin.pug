@@ -1,0 +1,8 @@
+mixin formLogin()
+  form.form(action='/login' method="POST")
+    h2 Inicio de Sesión
+    label(for="email") Dirección de Correo Electrónico
+    input(type="email" name="email")
+    label(for="password") Contraseña
+    input(type="password" name="password")
+    input.button(type="submit" value="Iniciar sesión")

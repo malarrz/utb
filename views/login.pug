@@ -1,0 +1,8 @@
+extends layout 
+
+include mixins/_formLogin
+
+block content
+  .inner
+    h2= title
+    +formLogin()

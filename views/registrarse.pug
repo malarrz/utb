@@ -1,0 +1,15 @@
+extends layout 
+
+block content
+  .inner 
+    form.form(action="/registrarse" method="POST")
+      h2 Registro de nuevo usuario 
+      label(for="nombre") Nombre de Usuario:
+      input(type="text" name="nombre" required)
+      label(for="email") Correo Electrónico:
+      input(type="email" name="email" required)
+      label(for="password") Contraseña:
+      input(type="password" name="password")
+      label(for="confirmar-password") Confirmar Contraseña:
+      input(type="password" name="confirmar-password")
+      input.button(type="submit" value="Registrarse")
