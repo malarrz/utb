@@ -1,5 +1,7 @@
 extends layout
 
+include mixins/_tarjetaTienda
+
 block content
   .inner
     h2 #{etiqueta || 'Etiquetas'}
@@ -9,3 +11,6 @@ block content
           a.tag__link(href=`/etiquetas/${t._id}` class=(t._id === etiqueta ? 'tag__link--active' : ""))
             span.tag__text= t._id 
             span.tag__count= t.count
+    .stores
+      each tienda in tiendas
+        +tarjetaTienda(tienda)

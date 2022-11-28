@@ -70,7 +70,10 @@ exports.mostrarTienda = async (req, res, next) => {
 };
 
 exports.tiendasPorEtiqueta = async (req, res) => {
-    const etiquetas = await Tienda.organizarEtiquetas();
     const etiqueta = req.params.etiqueta;
-    res.render('etiqueta', { etiquetas, title: 'Etiquetas', etiqueta});
+    const busquedaEtiqueta = etiqueta || { $exists: true };
+    const promesaEtiqueta = Tienda.organizarEtiquetas();
+    const promesaTienda = Tienda.find({ etiquetas: busquedaEtiqueta });
+    const [etiquetas, tiendas] = await Promise.all([promesaEtiqueta, promesaTienda]);
+    res.render('etiqueta', { etiquetas, title: 'Etiquetas', etiqueta, tiendas});
 };
