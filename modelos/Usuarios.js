@@ -22,6 +22,11 @@ const modeloUsuario = new Schema({
     }
 });
 
+modeloUsuario.virtual('gravatar').get(function() {
+    const hash = md5(this.email);
+    return `https://gravatar.com/avatar/${hash}?s=200`;
+});
+
 modeloUsuario.plugin(passportLocalMongoose, { usernameField: 'email' });
 modeloUsuario.plugin(mongodbErrorHandler);
 
