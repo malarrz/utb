@@ -3,9 +3,9 @@
   "version": "0.0.1",
   "private": true,
   "engines": {
-    "node": ">= 15.0.0",
-    "npm": ">= 8.x"
-  },  
+    "node": "16.14.0",
+    "npm": "8.x"
+  },
   "scripts": {
     "prod": "node ./start.js",
     "build": "webpack",
@@ -46,7 +46,8 @@
     "pug": "3.0.2",
     "slugs": "0.1.3",
     "uuid": "8.3.2",
-    "validator": "13.7.0"
+    "validator": "13.7.0",
+    "vercel": "^28.16.2"
   },
   "devDependencies": {
     "@babel/core": "7.16.0",

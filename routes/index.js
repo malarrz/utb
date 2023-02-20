@@ -17,7 +17,9 @@ router.get('/etiquetas', catchErrors(controladorTienda.tiendasPorEtiqueta));
 router.get('/etiquetas/:etiqueta', catchErrors(controladorTienda.tiendasPorEtiqueta))
 
 router.get('/login', controladorUsuario.formularioLogin);
+router.post('/login', controladorAutenticacion.login);
 router.get('/registrarse', controladorUsuario.formularioRegistro);
 router.post('/registrarse', controladorUsuario.validarRegistro, controladorUsuario.registrar, controladorAutenticacion.login);
+router.get('/logout', controladorAutenticacion.logout);
 
 module.exports = router;
