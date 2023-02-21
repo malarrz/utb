@@ -37,4 +37,21 @@ exports.registrar = async (req, res, next) => {
     const registro = promisify(Usuario.register, Usuario);
     await registro(usuario, req.body.password);
     next();
-}
+};
+
+exports.cuenta = (req, res) => {
+    res.render('cuenta', { title: 'Edita tu cuenta' });
+};
+
+exports.actualizarCuenta = async (req, res) => {
+    const actualizaciones = {
+        nombre: req.body.nombre, 
+        email: req.body.email
+    };
+
+    const usuario = await Usuario.findOneAndUpdate(
+        { _id: req.user._id }, { $set: actualizaciones }, { new: true, runValidators: true, context: 'query' }
+    );
+    req.flash('success', 'Datos Actualizados');
+    res.redirect('back');
+};

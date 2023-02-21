@@ -29,7 +29,7 @@ html
                 span.heart-count #{user.hearts && user.hearts.length}
               li.nav__item: a.nav__link(href="/logout", class=(currentPath.startsWith('/logout') ? 'nav__link--active' : ''))
                 != h.icon('logout')
-                span Logout
+                span Cerrar Sesión
               li.nav__item: a.nav__link(href="/cuenta", class=(currentPath.startsWith('/cuenta') ? 'nav__link--active' : ''))
                 img.avatar(src=user.gravatar + '&d=retro')
             else

@@ -22,4 +22,7 @@ router.get('/registrarse', controladorUsuario.formularioRegistro);
 router.post('/registrarse', controladorUsuario.validarRegistro, controladorUsuario.registrar, controladorAutenticacion.login);
 router.get('/logout', controladorAutenticacion.logout);
 
+router.get('/cuenta', controladorAutenticacion.esUsuario, controladorUsuario.cuenta);
+router.post('/cuenta', catchErrors(controladorUsuario.actualizarCuenta));
+
 module.exports = router;
