@@ -7,7 +7,7 @@ const { catchErrors } = require('../handlers/errorHandlers');
 
 router.get('/', catchErrors(controladorTienda.mostrarTiendas));
 router.get('/tiendas', catchErrors(controladorTienda.mostrarTiendas));  
-router.get('/agregar', controladorTienda.agregarTienda);
+router.get('/agregar', controladorAutenticacion.esUsuario, controladorTienda.agregarTienda);
 router.post('/agregar', controladorTienda.upload, catchErrors(controladorTienda.redimensionar), 
 catchErrors(controladorTienda.crearTienda));
 router.post('/agregar/:id', catchErrors(controladorTienda.modificarTienda));

@@ -12,3 +12,12 @@ exports.logout = (req, res) => {
     req.flash('success', 'Acabas de cerrar sesión');
     res.redirect('/');
 };
+
+exports.esUsuario = (req, res, next) => {
+    if (req.isAuthenticated()) {
+        next();
+        return;
+    }
+    req.flash('error', 'Debes iniciar sesión para continuar');
+    res.redirect('/login');
+};
