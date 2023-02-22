@@ -32,7 +32,12 @@ const modeloTienda = new mongoose.Schema({
             required: 'Colocar dirección'
         }
     },
-    foto: String
+    foto: String,
+    propietario: {
+        type: mongoose.Schema.ObjectId,
+        ref: 'Usuarios',
+        required: 'La tienda debe tener un propietario'
+    } 
 });
 
 modeloTienda.pre('save', async function(next) {
