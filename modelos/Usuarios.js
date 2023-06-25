@@ -19,7 +19,9 @@ const modeloUsuario = new Schema({
         type: String,
         required: "Es necesario un nombre de usuario",
         trim: true
-    }
+    },
+    tokenReseteo: String,
+    tokenExpiracion: Date
 });
 
 modeloUsuario.virtual('gravatar').get(function() {

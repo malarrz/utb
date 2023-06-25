@@ -1,0 +1,11 @@
+extends layout 
+
+block content
+  .inner
+    form.form(method="POST")
+      h2 Reestablece tu contraseña
+      label(for="password") Nueva Contraseña
+      input(type="password" name="password")
+      laber(for="confirmar-password") Confirmar Contraseña
+      input(type="password" name="confirmar-password")
+      input.button(type="submit" value="Reestablecer Contraseña")

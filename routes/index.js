@@ -24,5 +24,8 @@ router.get('/logout', controladorAutenticacion.logout);
 
 router.get('/cuenta', controladorAutenticacion.esUsuario, controladorUsuario.cuenta);
 router.post('/cuenta', catchErrors(controladorUsuario.actualizarCuenta));
+router.post('/cuenta/reestContrasena', catchErrors(controladorAutenticacion.resetContrasena));
+router.get('/cuenta/reseteo/:token', catchErrors(controladorAutenticacion.reseteo));
+router.post('/cuenta/reseteo/:token', controladorAutenticacion.contrasenasConfirmadas, catchErrors(controladorAutenticacion.actualizarContrasena));
 
 module.exports = router;

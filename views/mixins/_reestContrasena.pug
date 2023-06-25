@@ -1,0 +1,6 @@
+mixin resetContrasena()
+  form.form(action="/cuenta/reestContrasena" method="POST")
+    h2 ¡Olvidé mi contraseña!
+    label(for="email") Dirección de Correo Electrónico
+    input(type="email" name="email")
+    input.button(type="submit" value="Reestablecer contraseña")
