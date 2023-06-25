@@ -28,4 +28,6 @@ router.post('/cuenta/reestContrasena', catchErrors(controladorAutenticacion.rese
 router.get('/cuenta/reseteo/:token', catchErrors(controladorAutenticacion.reseteo));
 router.post('/cuenta/reseteo/:token', controladorAutenticacion.contrasenasConfirmadas, catchErrors(controladorAutenticacion.actualizarContrasena));
 
+router.get('/api/search', catchErrors(controladorTienda.busquedaTienda));
+
 module.exports = router;

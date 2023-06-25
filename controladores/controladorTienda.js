@@ -84,3 +84,18 @@ exports.tiendasPorEtiqueta = async (req, res) => {
     const [etiquetas, tiendas] = await Promise.all([promesaEtiqueta, promesaTienda]);
     res.render('etiqueta', { etiquetas, title: 'Etiquetas', etiqueta, tiendas});
 };
+
+exports.busquedaTienda = async (req, res) => {
+    const tiendas = await Tienda
+    .find({
+        $text: {
+            $search: req.query.q
+        }
+    }, {
+        score: { $meta: 'textScore' }
+    })
+    .sort({
+        score: { $meta: 'textScore' }
+    })
+    res.json(tiendas);
+}

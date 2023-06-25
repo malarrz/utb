@@ -40,6 +40,12 @@ const modeloTienda = new mongoose.Schema({
     } 
 });
 
+//índices para búsqueda
+modeloTienda.index({
+    nombre: 'text',
+    descripcion: 'text'
+});
+
 modeloTienda.pre('save', async function(next) {
     if(!this.isModified('nombre')) {
         next();
