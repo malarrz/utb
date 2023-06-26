@@ -99,3 +99,24 @@ exports.busquedaTienda = async (req, res) => {
     });
     res.json(tiendas);
 };
+
+exports.mapaTiendas = async (req, res) => {
+    const coordenadas = [req.query.lng, req.query.lat].map(parseFloat);
+    const q = {
+        location: {
+            $cerca: {
+                $geometry: {
+                    type: 'Point',
+                    coordenadas
+                },
+                //$maxDistance: 10000 //metros
+            }
+        }
+    };
+    const tiendas = await Tienda.find(q).select('slug nombre descripcion ubicacion');
+    res.json(tiendas);
+};
+
+exports.paginaMapa = (req, res) => {
+    res.render('mapa', {title: 'Mapa' });
+};

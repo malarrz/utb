@@ -27,7 +27,9 @@ router.post('/cuenta', catchErrors(controladorUsuario.actualizarCuenta));
 router.post('/cuenta/reestContrasena', catchErrors(controladorAutenticacion.resetContrasena));
 router.get('/cuenta/reseteo/:token', catchErrors(controladorAutenticacion.reseteo));
 router.post('/cuenta/reseteo/:token', controladorAutenticacion.contrasenasConfirmadas, catchErrors(controladorAutenticacion.actualizarContrasena));
+router.get('/mapa', controladorTienda.paginaMapa);
 
 router.get('/api/search', catchErrors(controladorTienda.busquedaTienda));
+router.get('/api/tiendas/cerca', catchErrors(controladorTienda.mapaTiendas));
 
 module.exports = router;

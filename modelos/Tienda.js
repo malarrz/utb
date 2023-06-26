@@ -46,6 +46,8 @@ modeloTienda.index({
     descripcion: 'text'
 });
 
+modeloTienda.index({ coordenadas: '2dsphere' });
+
 modeloTienda.pre('save', async function(next) {
     if(!this.isModified('nombre')) {
         next();
