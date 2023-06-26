@@ -96,6 +96,6 @@ exports.busquedaTienda = async (req, res) => {
     })
     .sort({
         score: { $meta: 'textScore' }
-    })
+    });
     res.json(tiendas);
-}
+};
