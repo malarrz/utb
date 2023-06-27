@@ -1,9 +1,11 @@
 const mongoose = require('mongoose');
 const Tienda = mongoose.model('Tienda');
+const Usuario = mongoose.model('Usuarios');
 const multer = require('multer');
 const jimp = require('jimp');
 const uuid = require('uuid');
 const { Store } = require('express-session');
+const Usuarios = require('../modelos/Usuarios');
 
 const multerOptions = {
     storage: multer.memoryStorage(),
@@ -119,4 +121,20 @@ exports.mapaTiendas = async (req, res) => {
 
 exports.paginaMapa = (req, res) => {
     res.render('mapa', {title: 'Mapa' });
+};
+
+exports.tiendaFavorita = async (req, res) => {
+    const favoritos = req.user.favoritos.map(obj => obj.toString());
+    const operador = favoritos.includes(req.params.id) ? '$pull' : '$addToSet';
+    const usuario = await Usuarios.findByIdAndUpdate(req.user._id, { [operador]: { favoritos: req.params.id }},
+        { new: true }
+    );
+    res.json(usuario);
+};
+
+exports.mostrarFavoritos = async (req, res) => {
+    const tiendas = await Tienda.find({
+        _id: { $in: req.user.favoritos }
+    });
+    res.render('tiendas', { title: 'Tiendas Favoritas', tiendas });
 };

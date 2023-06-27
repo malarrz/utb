@@ -28,8 +28,10 @@ router.post('/cuenta/reestContrasena', catchErrors(controladorAutenticacion.rese
 router.get('/cuenta/reseteo/:token', catchErrors(controladorAutenticacion.reseteo));
 router.post('/cuenta/reseteo/:token', controladorAutenticacion.contrasenasConfirmadas, catchErrors(controladorAutenticacion.actualizarContrasena));
 router.get('/mapa', controladorTienda.paginaMapa);
+router.get('/favoritos', controladorAutenticacion.esUsuario, catchErrors(controladorTienda.mostrarFavoritos));
 
 router.get('/api/search', catchErrors(controladorTienda.busquedaTienda));
 router.get('/api/tiendas/cerca', catchErrors(controladorTienda.mapaTiendas));
+router.post('/api/tiendas/:id/favoritos', catchErrors(controladorTienda.tiendaFavorita));
 
 module.exports = router;

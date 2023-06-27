@@ -21,7 +21,10 @@ const modeloUsuario = new Schema({
         trim: true
     },
     tokenReseteo: String,
-    tokenExpiracion: Date
+    tokenExpiracion: Date,
+    favoritos: [
+        { type: mongoose.Schema.ObjectId, ref: 'Tiendas' }
+    ]
 });
 
 modeloUsuario.virtual('gravatar').get(function() {
