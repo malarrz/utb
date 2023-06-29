@@ -1,0 +1,9 @@
+mixin formCalificacion(tienda)
+  form.reviewer(action=`/calificaciones/${tienda._id}` method="POST")
+    textarea(name="texto" placeholder="Deja tu opinión acerca de esta tienda")
+    .reviewer__meta
+      .reviewer__stars 
+        each num in [5,4,3,2,1]
+          input(type="radio" required id=`star${num}` name="calificacion" value=num)
+          label(for=`star${num}`) #{num} Estrellas
+      input.button(type="submit" value="Agregar calificación")

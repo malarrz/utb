@@ -73,7 +73,7 @@ exports.modificarTienda = async (req, res) => {
 };
 
 exports.mostrarTienda = async (req, res, next) => {
-    const tienda = await Tienda.findOne({ slug: req.params.slug }).populate('propietario');
+    const tienda = await Tienda.findOne({ slug: req.params.slug }).populate('propietario calificaciones');
     if (!tienda) return next();
     res.render('tienda', { tienda, title: tienda.nombre });
 };

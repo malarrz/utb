@@ -38,6 +38,9 @@ const modeloTienda = new mongoose.Schema({
         ref: 'Usuarios',
         required: 'La tienda debe tener un propietario'
     } 
+}, {
+    toJSON: { virtuals: true },
+    toObject: { virtuals: true },
 });
 
 //índices para búsqueda
@@ -69,5 +72,11 @@ modeloTienda.statics.organizarEtiquetas = function() {
         { $sort: { count: -1 } }
     ]);
 };
+
+modeloTienda.virtual('calificaciones', {
+    ref: 'Calificaciones',
+    localField: '_id',
+    foreignField: 'tienda'
+});
 
 module.exports = mongoose.model('Tienda', modeloTienda);

@@ -1,0 +1,11 @@
+mixin calificacion(calificacion)
+  .review__header 
+    .review__author 
+      img.avatar(src=calificacion.autor.gravatar)
+      p= calificacion.autor.nombre
+    .review__stars(title=`Calificación de ${calificacion.calificacion} de 5 estrellas`)
+      = `★`.repeat(calificacion.calificacion)
+      = `☆`.repeat(5 - calificacion.calificacion)
+    time.review__time(datetime=calificacion.fecha)= h.moment(calificacion.fecha).fromNow()
+  .review__body 
+    p= calificacion.texto

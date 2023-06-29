@@ -3,6 +3,7 @@ const router = express.Router();
 const controladorTienda = require('../controladores/controladorTienda');
 const controladorUsuario = require('../controladores/controladorUsuario');
 const controladorAutenticacion = require('../controladores/controladorAutenticacion');
+const controladorCalificacion = require('../controladores/controladorCalificacion');
 const { catchErrors } = require('../handlers/errorHandlers');
 
 router.get('/', catchErrors(controladorTienda.mostrarTiendas));
@@ -29,6 +30,8 @@ router.get('/cuenta/reseteo/:token', catchErrors(controladorAutenticacion.resete
 router.post('/cuenta/reseteo/:token', controladorAutenticacion.contrasenasConfirmadas, catchErrors(controladorAutenticacion.actualizarContrasena));
 router.get('/mapa', controladorTienda.paginaMapa);
 router.get('/favoritos', controladorAutenticacion.esUsuario, catchErrors(controladorTienda.mostrarFavoritos));
+
+router.post('/calificaciones/:id', controladorAutenticacion.esUsuario, catchErrors(controladorCalificacion.agregarCalificacion));
 
 router.get('/api/search', catchErrors(controladorTienda.busquedaTienda));
 router.get('/api/tiendas/cerca', catchErrors(controladorTienda.mapaTiendas));
