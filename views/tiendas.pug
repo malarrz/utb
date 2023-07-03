@@ -1,6 +1,7 @@
 extends layout 
 
 include mixins/_tarjetaTienda
+include mixins/_paginacion
 
 block content
   .inner
@@ -8,3 +9,4 @@ block content
     .stores
       each tienda in tiendas
         +tarjetaTienda(tienda)
+    +paginacion(pag, paginas, conteo)

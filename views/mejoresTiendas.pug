@@ -1,0 +1,21 @@
+extends layout 
+
+block content
+  .inner
+    h2 TIENDAS MEJOR CALIFICADAS
+    table.table
+      thead
+        td Fotografía
+        td Ranking
+        td Nombre
+        td Calificación
+        td Promedio Calificación
+      each tienda, i in tiendas
+        tr
+          td
+            a(href=`/tiendas/${tienda.slug}`)
+              img(width=200 src=`/uploads/${tienda.foto}` alt=tienda.nombre)
+          td #{i + 1}
+          td: a(href=`/tienda/${tienda.slug}`)= tienda.nombre
+          td= tienda.calificaciones.length
+          td #{Math.round(tienda.calificacionPromedio * 10) / 10} / 5

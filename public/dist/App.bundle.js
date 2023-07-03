@@ -2155,7 +2155,6 @@ module.exports = {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 function autocompletar(input, latInput, lngInput) {
-  console.log(input, latInput, lngInput);
   if (!input) return;
   var dropdown = new google.maps.places.Autocomplete(input);
   dropdown.addListener('place_changed', function () {
@@ -2167,6 +2166,7 @@ function autocompletar(input, latInput, lngInput) {
     if (e.keycode === 13) e.preventDefault();
   });
 }
+;
 /* harmony default export */ __webpack_exports__["default"] = (autocompletar);
 
 /***/ }),
@@ -2253,10 +2253,10 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 var opcionesMapa = {
   center: {
-    lat: -16.5033447,
-    lng: -68.1290321
+    lat: -16.50,
+    lng: -68.12
   },
-  zoom: 12
+  zoom: 10
 };
 function cargarLugares(map) {
   var lat = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : -16.50;
@@ -2268,6 +2268,7 @@ function cargarLugares(map) {
       return;
     }
     var limites = new google.maps.LatLngBounds();
+    var ventanaTienda = new google.maps.InfoWindow();
     var marcadores = lugares.map(function (place) {
       var _place$ubicacion$coor = _slicedToArray(place.ubicacion.coordenadas, 2),
         lugarLng = _place$ubicacion$coor[0],
@@ -2278,23 +2279,36 @@ function cargarLugares(map) {
       };
       limites.extend(position);
       var marcador = new google.maps.Marker({
-        map: map,
-        position: position
+        position: position,
+        map: map
       });
       marcador.place = place;
       return marcador;
+    });
+    marcadores.forEach(function (marker) {
+      return marker.addListener('click', function () {
+        var html = "\n                    <div class=\"popup\">\n                        <a href=\"/tiendas/".concat(this.place.slug, "\">\n                            <img src=\"/uploads/").concat(this.place.foto || 'tienda.png', "\" alt=\"").concat(this.place.nombre, "\" />\n                            <p>").concat(this.place.nombre, " - ").concat(this.place.ubicacion.direccion, "</p>\n                        </a>\n                    </div>\n                ");
+        ventanaTienda.setContent(html);
+        ventanaTienda.open(map, this);
+      });
     });
     map.setCenter(limites.getCenter());
     map.fitBounds(limites);
   });
 }
+;
 function crearMapa(mapDiv) {
   if (!mapDiv) return;
   var map = new google.maps.Map(mapDiv, opcionesMapa);
   cargarLugares(map);
   var busqueda = (0,_bling__WEBPACK_IMPORTED_MODULE_1__.$)('[name="geolocacion"]');
-  var autocompletarBusqueda = new google.maps.places.Autocomplete(busqueda);
+  var autocompletar = new google.maps.places.Autocomplete(busqueda);
+  autocompletar.addListener('place_changed', function () {
+    var place = autocompletar.getPlace();
+    cargarLugares(map, place.geometry.location.lat(), place.geometry.location.lng());
+  });
 }
+;
 /* harmony default export */ __webpack_exports__["default"] = (crearMapa);
 
 /***/ }),

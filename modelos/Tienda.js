@@ -73,10 +73,29 @@ modeloTienda.statics.organizarEtiquetas = function() {
     ]);
 };
 
+modeloTienda.statics.mejoresTiendas = function () {
+    return this.aggregate([
+        { $lookup: { from: 'calificaciones', localField: '_id', foreignField: 'tienda', as: 'calificaciones' }},
+        { $match: { 'calificaciones.4': { $exists: true } }},
+        { $project: { foto: '$$ROOT.foto', nombre: '$$ROOT.nombre', calificaciones: '$$ROOT.calificaciones', 
+        slug: '$$ROOT.slug', calificacionPromedio: { $avg: '$calificaciones.calificacion' }
+    } },
+        { $sort: { calificacionPromedio: -1 }}
+    ]);
+}
+
 modeloTienda.virtual('calificaciones', {
     ref: 'Calificaciones',
     localField: '_id',
     foreignField: 'tienda'
 });
+
+function autopopulate(next) {
+    this.populate('calificaciones');
+    next();
+};
+
+modeloTienda.pre('find', autopopulate);
+modeloTienda.pre('findOne', autopopulate);
 
 module.exports = mongoose.model('Tienda', modeloTienda);

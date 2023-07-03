@@ -1,0 +1,10 @@
+mixin paginacion(pag, paginas, conteo)
+  .pagination 
+    .pagination__prev
+      if pag > 1
+        a(href=`/tiendas/pag/${pag - 1}`) Anterior
+    .pagination__text
+      p Pág. #{pag} de #{paginas} - #{conteo} tiendas totales
+    .pagination__next
+      if pag < paginas
+        a(href=`/tiendas/pag/${parseFloat(pag) + 1}`) Siguiente

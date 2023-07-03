@@ -50,8 +50,26 @@ exports.crearTienda = async (req, res) => {
 };
 
 exports.mostrarTiendas = async (req, res) => {
-    const tiendas = await Tienda.find();
-    res.render('tiendas', { title: 'TIENDAS', tiendas });
+    const pag = req.params.pag || 1;
+    const limite = 2;
+    const salto = (pag * limite) - limite;
+
+    const promesaTiendas = Tienda
+    .find()
+    .skip(salto)
+    .limit(limite)
+    .sort({ creado: 'desc' });
+
+    const promesaConteo = Tienda.count();
+
+    const [tiendas, count] = await Promise.all([promesaTiendas, promesaConteo]);
+    const paginas = Math.ceil(count / limite);
+    if (!tiendas.length && salto) {
+        res.redirect(`/tiendas/pag/${paginas}`);
+        return;
+    };
+
+    res.render('tiendas', { title: 'TIENDAS', tiendas, pag, paginas, count });
 };
 
 const confirmarPropietario = (tienda, user) => {
@@ -111,11 +129,11 @@ exports.mapaTiendas = async (req, res) => {
                     type: 'Point',
                     coordenadas
                 },
-                //$maxDistance: 10000 //metros
+                //$maxDistance: 1000
             }
         }
     };
-    const tiendas = await Tienda.find(q).select('slug nombre descripcion ubicacion');
+    const tiendas = await Tienda.find(q).select('slug nombre descripcion ubicacion foto');
     res.json(tiendas);
 };
 
@@ -138,3 +156,8 @@ exports.mostrarFavoritos = async (req, res) => {
     });
     res.render('tiendas', { title: 'Tiendas Favoritas', tiendas });
 };
+
+exports.mejoresTiendas = async (req, res) => {
+    const tiendas = await Tienda.mejoresTiendas();
+    res.render('mejoresTiendas', { tiendas, title: 'Las Tiendas mejores calificadas'});
+}

@@ -7,7 +7,8 @@ const controladorCalificacion = require('../controladores/controladorCalificacio
 const { catchErrors } = require('../handlers/errorHandlers');
 
 router.get('/', catchErrors(controladorTienda.mostrarTiendas));
-router.get('/tiendas', catchErrors(controladorTienda.mostrarTiendas));  
+router.get('/tiendas', catchErrors(controladorTienda.mostrarTiendas));
+router.get('/tiendas/pag/:pag', catchErrors(controladorTienda.mostrarTiendas));
 router.get('/agregar', controladorAutenticacion.esUsuario, controladorTienda.agregarTienda);
 router.post('/agregar', controladorTienda.upload, catchErrors(controladorTienda.redimensionar), 
 catchErrors(controladorTienda.crearTienda));
@@ -32,6 +33,7 @@ router.get('/mapa', controladorTienda.paginaMapa);
 router.get('/favoritos', controladorAutenticacion.esUsuario, catchErrors(controladorTienda.mostrarFavoritos));
 
 router.post('/calificaciones/:id', controladorAutenticacion.esUsuario, catchErrors(controladorCalificacion.agregarCalificacion));
+router.get('/mejores', catchErrors(controladorTienda.mejoresTiendas));
 
 router.get('/api/search', catchErrors(controladorTienda.busquedaTienda));
 router.get('/api/tiendas/cerca', catchErrors(controladorTienda.mapaTiendas));

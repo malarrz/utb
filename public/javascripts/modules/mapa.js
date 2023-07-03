@@ -2,8 +2,8 @@ import axios from 'axios';
 import { $ } from './bling';
 
 const opcionesMapa = {
-    center: { lat: -16.5033447, lng: -68.1290321 },
-    zoom: 12
+    center: { lat: -16.50, lng: -68.12 },
+    zoom: 10
 };
 
 function cargarLugares(map, lat = -16.50, lng = -68.12) {
@@ -17,19 +17,34 @@ function cargarLugares(map, lat = -16.50, lng = -68.12) {
 
             const limites = new google.maps.LatLngBounds();
 
+            const ventanaTienda = new google.maps.InfoWindow();
+
             const marcadores = lugares.map(place => {
                 const [lugarLng, lugarLat] = place.ubicacion.coordenadas;
                 const position =  { lat: lugarLat, lng: lugarLng };
                 limites.extend(position);
-                const marcador = new google.maps.Marker({ map, position });
+                const marcador = new google.maps.Marker({ position, map });
                 marcador.place = place;
                 return marcador;
             });
 
+            marcadores.forEach(marker => marker.addListener('click', function() {
+                const html = `
+                    <div class="popup">
+                        <a href="/tiendas/${this.place.slug}">
+                            <img src="/uploads/${this.place.foto || 'tienda.png' }" alt="${this.place.nombre}" />
+                            <p>${this.place.nombre} - ${this.place.ubicacion.direccion}</p>
+                        </a>
+                    </div>
+                `;
+                ventanaTienda.setContent(html);
+                ventanaTienda.open(map, this);
+            }));
+
             map.setCenter(limites.getCenter());
             map.fitBounds(limites);
         });
-}
+};
 
 function crearMapa(mapDiv) {
     if(!mapDiv) return;
@@ -38,7 +53,11 @@ function crearMapa(mapDiv) {
     cargarLugares(map);
 
     const busqueda = $('[name="geolocacion"]');
-    const autocompletarBusqueda = new google.maps.places.Autocomplete(busqueda);
-}
+    const autocompletar = new google.maps.places.Autocomplete(busqueda);
+    autocompletar.addListener('place_changed', () => {
+        const place = autocompletar.getPlace();
+        cargarLugares(map, place.geometry.location.lat(), place.geometry.location.lng());
+    });
+};
 
 export default crearMapa;
